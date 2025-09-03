@@ -1,0 +1,327 @@
+/* ==========================================================================
+   1. Configuração e Variáveis Globais
+   ========================================================================== */
+
+/* Importando fontes mais próximas das cartas reais */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:wght@400;700&display=swap');
+
+:root {
+    /* Cores da Carta */
+    --card-bg-normal: #c9a35e;
+    --card-bg-effect: #a05d2c;
+    --card-border-color: #8b3902;
+    --card-info-bg: #ecd9bc;
+
+    /* Cores dos Elementos */
+    --star-orb-start: #ffc83d;
+    --star-orb-end: #e15300;
+    --star-border-color: #4d2e0a;
+    --gold-foil-start: #d4af37;
+    --gold-foil-mid: #ffd700;
+    --gold-foil-light: #f0e68c;
+
+    /* Tipografia */
+    --font-title: 'Cinzel', serif;
+    --font-body: 'EB Garamond', serif;
+}
+
+/* ==========================================================================
+   2. Estilos Base e Layout
+   ========================================================================== */
+
+body {
+    background: #bf0056;
+    background: radial-gradient(circle, rgba(191, 0, 86, 1) 0%, rgba(0, 25, 51, 1) 100%);
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.card-container {
+    perspective: 1000px;
+}
+
+.yugioh-card {
+    width: 420px; /* Tamanho mais próximo da proporção real */
+    height: 612px;
+    background: #dbac54; /* Cor base para monstro normal */
+    border: 12px solid;
+    border-image: linear-gradient(90deg,rgb(111, 112, 112) 0%, rgba(120, 120, 120, 1) 50%, rgb(95, 94, 91) 100%) 1;
+    border-radius: 18px;
+    padding: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.yugioh-card:hover {
+    transform: rotateY(12deg) rotateX(8deg) scale(1.05);
+}
+
+/* Monstro de Efeito */
+.effect-monster {
+    background: var(--card-bg-effect);
+}
+
+/* ==========================================================================
+   3. Componentes da Carta
+   ========================================================================== */
+   
+/* Cabeçalho: Nome e Atributo */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.card-name-bar{
+    border-style: outset;
+    border-color: #d6d6d66e;
+    border-width: 5px;
+    /* border: #000000; */
+}
+
+.card-name {
+    font-family: var(--font-title);
+    font-size: 1.8rem;
+    font-weight: 700;
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.attribute {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    background-color: #f0e68c; /* Exemplo: LIGHT */
+    background-image: url('path/to/light-attribute-icon.png'); /* Adicionar ícone */
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+}
+
+/* Nível da Carta */
+.card-level-box {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    padding: 0 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.star-icon {
+    width: 24px;
+    height: 24px;
+    /* Efeito de joia/orbe com estrela no centro */
+    background-image: 
+        /* Camada 1: Ícone da estrela (SVG) */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgb(77, 46, 10)'%3E%3Cpath d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z'/%3E%3C/svg%3E"),
+        /* Camada 2: Fundo do orbe (Gradiente) */
+        radial-gradient(circle, var(--star-orb-start) 0%, var(--star-orb-end) 100%);
+    background-size: 70%, 100%; /* Tamanho da estrela e do fundo */
+    background-position: center, center;
+    background-repeat: no-repeat; /* Não repetir nenhum dos backgrounds */
+    /* Borda mais escura e definida */
+    border: 2px solid var(--star-border-color);
+    border-radius: 50%;
+    /* Sombra externa para profundidade e interna para efeito 3D */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Imagem e Efeito Holográfico */
+.card-image-box {
+    width: 360px;
+    height: 360px;
+    border: 6px solid;
+    border-image: linear-gradient(90deg,rgb(171, 172, 173) 0%, rgba(120, 120, 120, 1) 50%, rgb(95, 94, 91) 100%) 1;
+    overflow: hidden;
+    margin: 0 auto 8px;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+    /* Garante que o mix-blend-mode funcione apenas dentro desta caixa */
+    isolation: isolate;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ==========================================================================
+   4. Efeitos Especiais (Holográfico)
+   ========================================================================== */
+
+/* Efeito Holográfico - Camada de Gradiente Brilhante */
+.card-image-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        115deg,
+        transparent 12%,
+        rgb(212, 148, 148) 48%,
+        rgb(255, 9, 50) 52%,
+        transparent 60%
+    );
+    background-size: 250% 250%;
+    background-position: 50% 50%;
+    filter: brightness(0.7) contrast(1.5);
+    opacity: 0.6;
+    mix-blend-mode: color-dodge;
+    transition: all 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Efeito Holográfico - Camada de Textura e Brilhos */
+.card-image-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://assets.codepen.io/13471/sparkles.gif"),
+                      url("https://assets.codepen.io/13471/holo.png");
+    background-position: center;
+    background-size: 180%;
+    mix-blend-mode: color-dodge;
+    opacity: 0.7;
+    filter: brightness(1) contrast(1.2);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Efeitos ao passar o mouse */
+.yugioh-card:hover .card-image-box::before {
+    opacity: 1;
+    filter: brightness(1) contrast(1.5);
+    animation: holo-gradient-anim 6s infinite ease-in-out;
+}
+
+.yugioh-card:hover .card-image-box::after {
+    opacity: 1;
+    filter: brightness(1.2) contrast(1.5);
+}
+
+/* Caixa de Texto */
+.card-info-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-info-bg);
+    border: 4px solid var(--card-border-color);
+    border-radius: 3px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    padding-bottom: 2px;
+    /* Margem horizontal auto para alinhar com a imagem, sem width fixo */
+    margin: 0 10px 8px;
+}
+
+.card-type {
+    font-family: var(--font-title);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0px;
+}
+
+.card-description {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    color: #000;
+    flex-grow: 1;
+    text-align: justify;
+    margin-bottom: 0.2rem;
+}
+
+/* Status (ATK/DEF) */
+.card-stats {
+    border-top: 1.5px solid #2c1e10;
+    padding-top: 2px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--font-title);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Rodapé */
+.card-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #000;
+}
+
+/* ==========================================================================
+   5. Animações (Keyframes)
+   ========================================================================== */
+
+/* Animação para o gradiente holográfico */
+@keyframes holo-gradient-anim {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ==========================================================================
+   6. Responsividade
+   ========================================================================== */
+
+/* Para telas de celular (ex: até 450px de largura) */
+@media (max-width: 450px) {
+    body {
+        /* Garante que o card não fique colado nas bordas */
+        padding: 2rem 0;
+    }
+
+    .yugioh-card {
+        /* Reduz a escala da carta para 80% do seu tamanho original */
+        transform: scale(0.8);
+    }
+
+    /* Ajusta o efeito de hover para a nova escala */
+    .yugioh-card:hover {
+        transform: rotateY(12deg) rotateX(8deg) scale(0.85);
+    }
+}
+
+/* Para telas ainda menores (ex: até 360px de largura) */
+@media (max-width: 360px) {
+    .yugioh-card {
+        transform: scale(0.7); /* Reduz para 70% */
+    }
+
+    .yugioh-card:hover {
+        transform: rotateY(12deg) rotateX(8deg) scale(0.75);
+    }
+}
