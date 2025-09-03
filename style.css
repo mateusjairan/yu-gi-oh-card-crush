@@ -30,8 +30,8 @@
    ========================================================================== */
 
 body {
-    background: #bf0056;
-    background: radial-gradient(circle, rgba(191, 0, 86, 1) 0%, rgba(0, 25, 51, 1) 100%);
+    background: #bf0000;
+    background: radial-gradient(circle, rgb(114, 0, 16) 0%, rgb(10, 13, 17) 100%);
     font-family: var(--font-body);
     display: flex;
     justify-content: center;
